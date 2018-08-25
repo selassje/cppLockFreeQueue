@@ -1,4 +1,6 @@
 #include <cstddef>
+#include <memory>
+
 
 #include "../lfQueue/lfQueue.hpp"
 
@@ -6,7 +8,7 @@ namespace lfQueue
 {
     namespace tests
     {
-         bool basicTestCase1()
+        bool basicTestCase1()
         {
             lfQueue<int> queue;
             queue.push(3);

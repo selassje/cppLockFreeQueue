@@ -3,15 +3,34 @@
 
 namespace lfQueue
 {
+    template<typename T>
+    class lfQueue
+    {
+        public:
+            void push(const T &t)
+            {
+                if (nullptr == m_Head)
+                {
+                    m_Head = std::make_unique<node>(t);
+                }
+                ++m_Size;
+            }
+            std::size_t size() const {return m_Size;}
+            virtual ~lfQueue() {}
+        private:
+            std::size_t m_Size = 0;
 
-template<typename T>
-class lfQueue
-{
-public:
-    void push(const T &t) {}
-    std::size_t size() const {return 0;}
+            struct node;
+            using  pNode = std::unique_ptr<node>;
+            struct node
+            {
+                T data;
+                pNode next = nullptr;
+                node(const T &t): data(t) {}
+            };
 
-};
+            pNode m_Head = nullptr;
+    };
 }
 
 #endif
