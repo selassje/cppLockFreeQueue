@@ -1,6 +1,6 @@
-#include "../lfQueue/lfQueue.hpp"
-
 #include <cstddef>
+
+#include "../lfQueue/lfQueue.hpp"
 
 namespace lfQueue
 {
