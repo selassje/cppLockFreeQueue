@@ -20,6 +20,7 @@ namespace lfQueue
             assert(queue.size() == 1);
             queue.push(4);
             assert(queue.size() == 2);
+            assert(queue.back() == 4);
             return true;
         }
     }
