@@ -8,7 +8,7 @@ namespace lfQueue
     {
         public: 
             std::size_t size() const {return m_Size;}
-            void lfQueue::push(const T &t) noexcept;
+            void push(const T &t) noexcept;
             const T& back() const noexcept;
 
 
