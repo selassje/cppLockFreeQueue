@@ -9,10 +9,11 @@ namespace lfQueue
         public: 
             std::size_t size() const {return m_Size;}
             void push(const T &t) noexcept;
+            void pop() noexcept;
             const T& back() const noexcept;
+            const T& front() const noexcept;
 
-
-            virtual ~lfQueue() {}
+            virtual ~lfQueue() {};
         private:
             std::size_t m_Size = 0;
 
@@ -22,19 +23,26 @@ namespace lfQueue
             {
                 T data;
                 pNode next = nullptr;
+                node* previous = nullptr;
                 node(const T &t): data(t) {}
             };
 
             pNode m_Tail = nullptr;
+            pNode m_Head = nullptr;
     };
 
     template<typename T>
     void lfQueue<T>::push(const T &t) noexcept
     {
         pNode pNewNode = std::make_unique<node>(t);
-        if (nullptr != m_Tail)
+        if (m_Size != 0)
         {
             pNewNode->next = std::unique_ptr<node>(m_Tail.get());
+            m_Tail->previous = pNewNode.get();
+            if (m_Size == 1)
+            {
+                m_Head = std::move(m_Tail);
+            }
         }
         m_Tail.release();
         m_Tail = std::move(pNewNode);
@@ -46,7 +54,34 @@ namespace lfQueue
         return m_Tail->data;
     }
 
+    template<typename T>
+    const T&  lfQueue<T>::front() const noexcept
+    {
+        return m_Size == 1 ? m_Tail->data : m_Head->data;
+    }
 
+    template<typename T>
+    void lfQueue<T>::pop() noexcept
+    {
+        if (m_Size > 0)
+        {
+            if (m_Size == 1)
+            {
+                m_Tail = nullptr;
+            }
+            else
+            {
+                auto prev = m_Head->previous;
+                m_Head = nullptr;
+                prev->next.release();
+                if (m_Size != 2)
+                {
+                    m_Head = std::move(std::unique_ptr<node>(prev));
+                }
+            }
+            --m_Size;
+        }
+    }
 }
 
 
