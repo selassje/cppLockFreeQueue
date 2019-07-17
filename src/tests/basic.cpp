@@ -38,4 +38,4 @@ namespace lfQueue
             return true;
         }
     }
-};
+}
