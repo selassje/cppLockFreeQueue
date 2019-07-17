@@ -15,5 +15,5 @@ addons:
 script:
       - cd build/gnu
       - bash  build.sh
-      - cd ../bin
+      - cd ../../bin
       - ./lfQueueTest
