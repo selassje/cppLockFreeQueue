@@ -12,7 +12,6 @@ namespace lfQueue
             void pop() noexcept;
             const T& back() const noexcept;
             const T& front() const noexcept;
-
             virtual ~lfQueue() {};
         private:
             std::size_t m_Size = 0;
@@ -83,8 +82,4 @@ namespace lfQueue
         }
     }
 }
-
-
-
-
 #endif
