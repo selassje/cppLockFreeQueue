@@ -2,7 +2,8 @@ cmake_minimum_required (VERSION 3.5)
 
 project (lfQueue)
 
-message("Compiler path ${CMAKE_CXX_COMPILER_ID}")
+message("CMake version ${CMAKE_VERSION}")
+message("Compiler ${CMAKE_CXX_COMPILER_ID}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../bin") 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
