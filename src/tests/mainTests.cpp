@@ -1,6 +1,8 @@
+#include "gtest/gtest.h"
 #include "basic.hpp"
 
-int main(void)
+int main(int argc, char *argv[])
 {
-    return lfQueue::tests::basicTestCase1() ? 0 : 1;
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

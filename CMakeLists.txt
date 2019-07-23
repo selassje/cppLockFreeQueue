@@ -3,8 +3,11 @@ cmake_minimum_required (VERSION 3.5)
 project (lfQueue)
 
 message("CMake version ${CMAKE_VERSION}")
+message("CMake generator ${CMAKE_GENERATOR}")
 message("Compiler ${CMAKE_CXX_COMPILER_ID}")
 message("Compiler Version ${CMAKE_CXX_COMPILER_VERSION}")
+message("CMake Home ${CMAKE_HOME_DIRECTORY}")
+
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../bin") 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
@@ -38,6 +41,8 @@ if(DEFINED ENV{ENABLE_COVERAGE})
     endif()
 endif()
 
-
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(NO_OUTPUT_DIRS)
 add_executable(lfQueueTest src/tests/mainTests.cpp
                            src/tests/basic.cpp )
+target_link_libraries(lfQueueTest ${CONAN_LIBS})
