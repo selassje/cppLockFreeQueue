@@ -24,7 +24,7 @@ addons:
     build_command:  cmake --build .
     branch_pattern: coverity_scan
 
-  apt:
+   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
