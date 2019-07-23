@@ -1,3 +1,3 @@
 cd ../../bin
 lfQueueTest.exe
-cd ../build/msvc
+cd ../build/msvc2019

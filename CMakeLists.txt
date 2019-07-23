@@ -6,7 +6,7 @@ message("CMake version ${CMAKE_VERSION}")
 message("CMake generator ${CMAKE_GENERATOR}")
 message("Compiler ${CMAKE_CXX_COMPILER_ID}")
 message("Compiler Version ${CMAKE_CXX_COMPILER_VERSION}")
-message("CMake Home ${CMAKE_HOME_DIRECTORY}")
+
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../bin") 
