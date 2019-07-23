@@ -1,0 +1,14 @@
+{
+ "options": [
+  [
+   "gtest:shared",
+   "True"
+  ]
+ ],
+ "root": {
+  "name": null,
+  "version": null,
+  "user": null,
+  "channel": null
+ }
+}

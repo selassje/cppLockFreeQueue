@@ -1,0 +1,35 @@
+[settings]
+    arch=x86_64
+    build_type=Release
+    compiler=gcc
+    compiler.libcxx=libstdc++11
+    compiler.version=7
+    os=Windows
+
+[requires]
+    gtest/1.Y.Z
+
+[options]
+
+
+[full_settings]
+    arch=x86_64
+    arch_build=x86_64
+    build_type=Release
+    compiler=gcc
+    compiler.libcxx=libstdc++11
+    compiler.version=7
+    os=Windows
+    os_build=Windows
+
+[full_requires]
+    gtest/1.7.0@bincrafters/stable:9c6fc66516576f0c1511bcc299ef28db84743a80
+
+[full_options]
+    gtest:shared=True
+
+[recipe_hash]
+
+
+[env]
+
