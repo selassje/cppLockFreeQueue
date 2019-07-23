@@ -12,6 +12,8 @@ addons:
       - gcc-6
       - g++-6
       - cmake
+install:
+      - pip install --user conan
 script:
       - cd build/gnu
       - export CC=/usr/bin/gcc-6
