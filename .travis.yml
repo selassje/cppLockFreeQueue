@@ -10,7 +10,7 @@ before_install:
 
 
 
-dist: trusty
+
 sudo: required
 language:
   - cpp
