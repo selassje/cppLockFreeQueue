@@ -33,3 +33,6 @@ addons:
       - cmake
 install:
       - pip install --user conan
+      
+script:
+  - cmake --build . 
