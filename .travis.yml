@@ -17,17 +17,11 @@ addons:
       name: selassje/cppLockFreeQueue
       description: lock free Queue
     notification_email: selassje@gmail.com
-    build_command_prepend: cd build/gnu && export CC=/usr/bin/gcc-4 && export CXX=/usr/bin/g++-4 && conan install -s arch=x86_64 -s arch_build=x86_64 ../.. --build missing && cmake "../.."
+    build_command_prepend: cd build/gnu && export CC=/usr/bin/gcc && export CXX=/usr/bin/g++ && conan install -s arch=x86_64 -s arch_build=x86_64 ../.. --build missing && cmake "../.."
     build_command:  make
     branch_pattern: coverity_scan
 
-   apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4
-      - g++-4
-      - cmake
+
 
 script:
     - cat /home/travis/build/selassje/cppLockFreeQueue/build/gnu/cov-int/build-log.txt
