@@ -21,10 +21,7 @@ addons:
     build_command:  make
     branch_pattern: coverity_scan
 
-   apt:
-    sources:
-      - ubuntu-toolchain-r-test
 
 
 script:
-    - cat /home/travis/build/selassje/cppLockFreeQueue/build/gnu/cov-int/build-log.txt
+    - make
