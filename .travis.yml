@@ -30,4 +30,4 @@ addons:
       - cmake
 
 script:
-    - echo Done
+    - cat /travis/build/selassje/cppLockFreeQueue/build/gnu/cov-int/build-log.txt
