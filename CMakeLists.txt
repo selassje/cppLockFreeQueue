@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 3.5)
 
 project (lfQueue)
 
+
 message("CMake version ${CMAKE_VERSION}")
 message("CMake generator ${CMAKE_GENERATOR}")
 message("Compiler ${CMAKE_CXX_COMPILER_ID}")
@@ -41,8 +42,11 @@ if(DEFINED ENV{COVERITY_SCAN_TOKEN})
     endif()
 endif()
 
+
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+set(CONAN_LIBCXX ${CONAN_SETTINGS_COMPILER_LIBCXX})
 conan_basic_setup(NO_OUTPUT_DIRS)
+
 add_executable(lfQueueTest src/tests/mainTests.cpp
                            src/tests/basic.cpp )
 target_link_libraries(lfQueueTest ${CONAN_LIBS})
