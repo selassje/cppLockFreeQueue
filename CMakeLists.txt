@@ -33,7 +33,7 @@ foreach(CXX_FLAG ${ADD_CXX_FLAGS})
 endforeach()
 
 
-if(DEFINED ENV{COVERITY_SCAN})
+if(DEFINED ENV{COVERITY_SCAN_TOKEN})
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         message("Enabling coverage build")
         add_compile_options(-fprofile-arcs -ftest-coverage -O0)
