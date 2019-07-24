@@ -26,3 +26,4 @@ addons:
 script:
     - cd build/gnu
     - ./build.sh
+    - ./run.sh
