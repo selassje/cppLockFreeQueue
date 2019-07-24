@@ -25,4 +25,4 @@ addons:
 
 script:
     - cd build/gnu
-    - make
+    - ./build.sh
