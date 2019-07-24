@@ -19,7 +19,7 @@ addons:
     notification_email: selassje@gmail.com
     build_command_prepend: cd build/gnu
     build_command: ./build.sh
-    branch_pattern: coverity_scan
+    branch_pattern: covereity_scan
 
 
 
