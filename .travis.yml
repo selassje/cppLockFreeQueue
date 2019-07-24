@@ -17,7 +17,7 @@ addons:
       name: selassje/cppLockFreeQueue
       description: lock free Queue
     notification_email: selassje@gmail.com
-    build_command_prepend: cd build/gnu && export CC=/usr/bin/gcc && export CXX=/usr/bin/g++ && conan install -s compiler.version=libstdc++11 ../.. --build gtest && cmake "../.."
+    build_command_prepend: cd build/gnu && export CC=/usr/bin/gcc && export CXX=/usr/bin/g++ && conan install -s compiler.libcxx=libstdc++11 ../.. --build gtest && cmake "../.."
     build_command:  make
     branch_pattern: coverity_scan
 
