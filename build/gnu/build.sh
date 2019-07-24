@@ -1,3 +1,3 @@
-conan install -s arch=x86_64 -s arch_build=x86_64 ../.. --build missing
+conan install -s compiler.libcxx=libstdc++11 --build missing
 cmake "../.."
 cmake --build .

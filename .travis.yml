@@ -17,12 +17,12 @@ addons:
       name: selassje/cppLockFreeQueue
       description: lock free Queue
     notification_email: selassje@gmail.com
-    build_command_prepend: cd build/gnu && conan install -s compiler.libcxx=libstdc++11 ../.. --build missing && cmake "../.."
-    build_command:  make
+    build_command_prepend: cd build/gnu && ./build.sh
+    build_command:
     branch_pattern: coverity_scan
 
 
 
 script:
     - cd build/gnu
-    - make
+    - ./build.sh
