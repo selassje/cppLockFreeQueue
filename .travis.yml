@@ -3,3 +3,31 @@ env:
    - secure: "wFWSSD1JjI6EW1ttRvuRK3fQju5PC60O6ERz+NjBFIq4NEq9eWT0R19lcFMBeqDSy2kL0PIwgprMqpiNHiC0uOD44vSRnUkQvo+OXwiBvFAgJSY3sm7NUnwDrfdQs3S7nYiEMu6d7L94FS+KQQhkC1ZpBtFSb/nwvvA5mJCf5bkGMHGJPLfc9PhTmyqqafV1qDzCvxkaZyNDyl3Ls9wIfj4wwpC2Rg9RFODLppxpnDPApyQgo40m5DPLWVFM5wrnvqOHEQGAUrGvdJLOCR3fkbMDvPajK6625IL4T6DY6rmh5e6Z8WDEQDT68zX8UVYkhsJnmbyzLcyeOaUcpXESjloQmHm46raAqhpgSK8IRMl/xrP1Ls8fy65HWkpIM1P4bTOk/1tPJp0ThK8xWzvw+iAFrBp3I81lgXqQZ4QkIPZCNtV2d+weWRjywduQovfqZxnvQJn3+VZJNWpfNk30JKZfdcAlGwnqRFMLkzfdyAIabxYkuCVLFpBVISSBCoKbQBXqAFEfNfVtt1N4ya3lIuYAkCHXEnEmVcJ8PTzqt00rG9cZh70BCfWy9X4GiZm774orxM0Lv7joMrMt2iNRR49xOxb6rJ/IxTXl8n4frAFUtMJ4b84wD+Rkgm77PAe4ZJIPq3Fpsupi4E6jh8FxZRkXf/2ZaMSMBH4Eue8QtJg="
 before_install:
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+sudo: required
+language:
+  - cpp
+compiler:
+  - gcc
+addons:
+   coverity_scan:
+    project:
+      name: selassje/cppLockFreeQueue
+      description: lock free Queue
+    notification_email: selassje@gmail.com
+    build_command_prepend: 
+                  - cd build/gnu
+                  - conan install -s arch=x86_64 -s arch_build=x86_64 ../.. --build missing
+                  - cmake "../.."
+    build_command:  cmake --build .
+    branch_pattern: coverity_scan
+
+   apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-6
+      - g++-6
+      - cmake
+install:
+      - pip install --user conan
