@@ -9,12 +9,12 @@ namespace lfQueue
         void basic_test(T&& a, T&& b)
         {
             lfQueue<int> queue;
-            queue.push(a);
+            queue.push(std::forward<T&&>(a));
             EXPECT_EQ(queue.size(), 1);
             EXPECT_EQ(queue.front(), a);
             EXPECT_EQ(queue.back(), a);
 
-            queue.push(b);
+            queue.push(std::forward<T&&>(b));
             EXPECT_EQ(queue.size(), 2);
             EXPECT_EQ(queue.back(), b);
             EXPECT_EQ(queue.front(), a);
