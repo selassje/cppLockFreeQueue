@@ -1,14 +1,5 @@
 #include "gtest/gtest.h"
-#include <cstddef>
-#include <memory>
-
-#ifdef NDEBUG
-#undef NDEBUG
-#endif
-
-#include <cassert>
 #include "../lfQueue/lfQueue.hpp"
-
 
 namespace lfQueue
 {
