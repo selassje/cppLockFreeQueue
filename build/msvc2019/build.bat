@@ -1,3 +1,3 @@
-conan  install -s arch=x86_64 -s arch_build=x86_64 ../..
-cmake -G "Visual Studio 15 2017 Win64" ../..
+conan  install -s compiler.toolset=v141 ../..
+cmake  ../..
 cmake --build . --config Release
