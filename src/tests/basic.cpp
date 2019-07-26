@@ -6,7 +6,7 @@ namespace lfQueue
     namespace tests
     {
         template<typename T>
-        void basic_test(T&& a, T&& b)
+        void basic_push_test(T&& a, T&& b)
         {
             lfQueue<int> queue;
             queue.push(std::forward<T&&>(a));
@@ -32,12 +32,51 @@ namespace lfQueue
         {        
             int a = 3;
             int b = 5;
-            basic_test(a,b);
+            basic_push_test(a,b);
         }
 
         TEST(lfQueue, test_rValue_push)
         {
-            basic_test(3, 5);
+            basic_push_test(3, 5);
         }
+
+        class constructionCounter
+        {
+        public :
+            constructionCounter() { ++m_userCount;}
+            constructionCounter(const constructionCounter&) { ++m_copyCount; }
+            constructionCounter(constructionCounter&&) noexcept { ++m_moveCount; }
+       
+            static void reset() { m_moveCount = 0; m_copyCount = 0; m_userCount = 0; }
+            static bool test(int u, int c, int m) { return m_userCount == u && m_copyCount == c && m_moveCount == m; }
+
+        private :
+            static int m_userCount;
+            static int m_moveCount;
+            static int m_copyCount;
+        };
+
+        int constructionCounter::m_moveCount = 0;
+        int constructionCounter::m_copyCount = 0;
+        int constructionCounter::m_userCount = 0;
+
+        TEST(lfQueue, construction_count_test)
+        {
+            ASSERT_TRUE(constructionCounter::test(0, 0, 0));
+            lfQueue<constructionCounter> queue;
+            constructionCounter copyPush;
+            queue.push(copyPush);
+            ASSERT_TRUE(constructionCounter::test(1, 1, 0));
+            constructionCounter::reset();
+
+            ASSERT_TRUE(constructionCounter::test(0, 0, 0));
+            queue.push({});
+            ASSERT_TRUE(constructionCounter::test(1, 0, 1));
+
+            constructionCounter::reset();
+            queue.emplace();
+            ASSERT_TRUE(constructionCounter::test(1, 0, 0));
+        }
+
     }
 }
