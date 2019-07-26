@@ -92,7 +92,5 @@ namespace lfQueue
             queue.emplace(constructionCounter{});
             ASSERT_TRUE(constructionCounter::test(1, 0, 1));
         }
-
-
     }
 }

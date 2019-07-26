@@ -1,6 +1,8 @@
 #ifndef LFQUEUE_HPP_INCLUDED
 #define LFQUEUE_HPP_INCLUDED
 
+#include<mutex>
+
 namespace lfQueue
 {
     template<typename T>
@@ -17,6 +19,7 @@ namespace lfQueue
             virtual ~lfQueue();
         private:
             std::size_t m_Size = 0;
+            std::mutex  m_mutex;
 
             struct node;
             using  pNode = std::unique_ptr<node>;
@@ -49,13 +52,15 @@ namespace lfQueue
     template<typename T>
     void lfQueue<T>::push(T&& t) noexcept
     {
-         emplace(std::move(t));
+        emplace(std::move(t));
     }
 
     template<typename T>
     template<typename... Args> 
     void lfQueue<T>::emplace(Args&& ... args)
     {
+        std::lock_guard<std::mutex> lock(m_mutex);
+
         pNode pNewNode = std::make_unique<node>(std::forward<Args>(args)...);
         if (m_Size != 0)
         {

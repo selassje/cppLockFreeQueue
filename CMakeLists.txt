@@ -58,5 +58,7 @@ set(CONAN_LIBCXX ${CONAN_SETTINGS_COMPILER_LIBCXX})
 conan_basic_setup(NO_OUTPUT_DIRS)
 
 add_executable(lfQueueTest src/tests/mainTests.cpp
-                           src/tests/basic.cpp )
+                           src/tests/basic.cpp 
+                           src/tests/mtTests.cpp)
+                           
 target_link_libraries(lfQueueTest ${CONAN_LIBS})
