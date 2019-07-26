@@ -10,22 +10,22 @@ namespace lfQueue
         {
             lfQueue<int> queue;
             queue.push(std::forward<T&&>(a));
-            EXPECT_EQ(queue.size(), 1);
+            EXPECT_EQ(queue.size(), 1u);
             EXPECT_EQ(queue.front(), a);
             EXPECT_EQ(queue.back(), a);
 
             queue.push(std::forward<T&&>(b));
-            EXPECT_EQ(queue.size(), 2);
+            EXPECT_EQ(queue.size(), 2u);
             EXPECT_EQ(queue.back(), b);
             EXPECT_EQ(queue.front(), a);
 
             queue.pop();
-            EXPECT_EQ(queue.size(), 1);
+            EXPECT_EQ(queue.size(), 1u);
             EXPECT_EQ(queue.front(), b);
             EXPECT_EQ(queue.back(), b);
 
             queue.pop();
-            EXPECT_EQ(queue.size(), 0);
+            EXPECT_EQ(queue.size(), 0u);
         }
 
         TEST(lfQueue, test_lValue_push)
