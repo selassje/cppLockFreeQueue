@@ -60,7 +60,7 @@ namespace lfQueue
         int constructionCounter::m_copyCount = 0;
         int constructionCounter::m_userCount = 0;
 
-        TEST(lfQueue, construction_count_test)
+        TEST(lfQueue, construction_count_push_test)
         {
             ASSERT_TRUE(constructionCounter::test(0, 0, 0));
             lfQueue<constructionCounter> queue;
@@ -72,11 +72,27 @@ namespace lfQueue
             ASSERT_TRUE(constructionCounter::test(0, 0, 0));
             queue.push({});
             ASSERT_TRUE(constructionCounter::test(1, 0, 1));
+        }
 
+        TEST(lfQueue, construction_count_emplace_test)
+        {
+            constructionCounter copyEmplace;
             constructionCounter::reset();
+            ASSERT_TRUE(constructionCounter::test(0, 0, 0));
+            lfQueue<constructionCounter> queue;
+            
             queue.emplace();
             ASSERT_TRUE(constructionCounter::test(1, 0, 0));
+
+            constructionCounter::reset();
+            queue.emplace(copyEmplace);
+            ASSERT_TRUE(constructionCounter::test(0, 1, 0));
+
+            constructionCounter::reset();
+            queue.emplace(constructionCounter{});
+            ASSERT_TRUE(constructionCounter::test(1, 0, 1));
         }
+
 
     }
 }
