@@ -100,10 +100,10 @@ namespace lfQueue
         {
             const unsigned size = 10;
             lfQueue<int> queue;
-            for (int i = 0; i < size; ++i) queue.emplace(i);
+            for (unsigned i = 0; i < size; ++i) queue.emplace(i);
             EXPECT_EQ(queue.size(), size);
             queue.clear();
-            EXPECT_EQ(queue.size(), 0);
+            EXPECT_EQ(queue.size(), 0u);
             ASSERT_FALSE(queue.front());
         }
     }

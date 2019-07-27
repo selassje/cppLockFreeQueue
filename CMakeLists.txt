@@ -8,7 +8,7 @@ message("CMake generator ${CMAKE_GENERATOR}")
 message("Compiler ${CMAKE_CXX_COMPILER_ID}")
 message("Compiler Version ${CMAKE_CXX_COMPILER_VERSION}")
 
-#set(CMAKE_VERBOSE_MAKEFILE ON)
+
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../bin") 
