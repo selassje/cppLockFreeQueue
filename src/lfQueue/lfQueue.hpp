@@ -2,27 +2,33 @@
 #define LFQUEUE_HPP_INCLUDED
 
 #include<mutex>
+#include<optional>
 
 namespace lfQueue
 {
     template<typename T>
     class lfQueue
     {
+        struct node;
+        using  pNode = std::unique_ptr<node>;
+        using  constOptRef = std::optional<std::reference_wrapper<T>>;
+
         public: 
             std::size_t size() const {return m_Size;}
             void push(const T &t) noexcept;
             void push(T &&t) noexcept;
             template<typename... Args> void emplace(Args&&... args);
             void pop() noexcept;
-            const T& back() const noexcept;
-            const T& front() const noexcept;
+            constOptRef back() const noexcept;
+            constOptRef front() const noexcept;
+            void clear() noexcept;
             virtual ~lfQueue();
         private:
             std::size_t m_Size = 0;
             std::mutex  m_mutex;
-
-            struct node;
-            using  pNode = std::unique_ptr<node>;
+            pNode m_Tail = nullptr;
+            pNode m_Head = nullptr;
+      
             struct node
             {
                 T data;
@@ -32,9 +38,6 @@ namespace lfQueue
                 node(T&& t) : data(std::move(t)) {}
                 node() = default;
             };
-
-            pNode m_Tail = nullptr;
-            pNode m_Head = nullptr;
     };
 
     template<typename T>
@@ -77,15 +80,16 @@ namespace lfQueue
     }
 
     template<typename T>
-    const T&  lfQueue<T>::back() const noexcept
+    typename lfQueue<T>::constOptRef lfQueue<T>::back() const noexcept
     {
-        return m_Tail->data;
+        return m_Size > 0 ? constOptRef(m_Tail->data) : std::nullopt;
     }
 
     template<typename T>
-    const T&  lfQueue<T>::front() const noexcept
+    typename lfQueue<T>::constOptRef lfQueue<T>::front() const noexcept
     {
-        return m_Size == 1 ? m_Tail->data : m_Head->data;
+        return m_Size > 0 ? m_Size == 1 ? constOptRef(m_Tail->data) : constOptRef(m_Head->data)
+                          : std::nullopt;
     }
 
     template<typename T>
@@ -109,6 +113,13 @@ namespace lfQueue
             }
             --m_Size;
         }
+    }
+
+    template<typename T>
+    void lfQueue<T>::clear() noexcept
+    {
+        m_Size = 0;
+        m_Tail.reset(nullptr);
     }
 }
 #endif

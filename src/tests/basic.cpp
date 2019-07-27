@@ -9,8 +9,10 @@ namespace lfQueue
         void basic_push_test(T&& a, T&& b)
         {
             lfQueue<int> queue;
+
             queue.push(std::forward<T&&>(a));
             EXPECT_EQ(queue.size(), 1u);
+
             EXPECT_EQ(queue.front(), a);
             EXPECT_EQ(queue.back(), a);
 
@@ -26,6 +28,7 @@ namespace lfQueue
 
             queue.pop();
             EXPECT_EQ(queue.size(), 0u);
+           
         }
 
         TEST(lfQueue, test_lValue_push)
@@ -91,6 +94,17 @@ namespace lfQueue
             constructionCounter::reset();
             queue.emplace(constructionCounter{});
             ASSERT_TRUE(constructionCounter::test(1, 0, 1));
+        }
+
+        TEST(lfQueue, basic_clear_test)
+        {
+            const unsigned size = 10;
+            lfQueue<int> queue;
+            for (int i = 0; i < size; ++i) queue.emplace(i);
+            EXPECT_EQ(queue.size(), size);
+            queue.clear();
+            EXPECT_EQ(queue.size(), 0);
+            ASSERT_FALSE(queue.front());
         }
     }
 }
