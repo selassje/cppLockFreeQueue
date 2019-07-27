@@ -120,6 +120,7 @@ namespace lfQueue
     void lfQueue<T>::clear() noexcept
     {
         m_Size = 0;
+        m_Head.release();
         m_Tail.reset(nullptr);
     }
 }

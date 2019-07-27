@@ -3,6 +3,8 @@
 #include <thread>
 #include <random>
 #include <memory>
+#include <vector>
+#include <algorithm>
 
 namespace lfQueue
 {
@@ -52,21 +54,24 @@ namespace lfQueue
         
         using pLfQueueThread = std::unique_ptr<lfQueueThread>;
 
-        TEST(lfQueue, test_mt_2_threads_add)
+        void mt_test_add_only(const unsigned threadNum, const unsigned itemsToAddPerThread)
         {
+            queue.clear();
+            std::vector<pLfQueueThread> threads;
+            for (unsigned i = 0; i < threadNum; ++i)
+            {
+                threads.emplace_back(std::make_unique<lfQueueThreadAdd>(itemsToAddPerThread));
+            }
 
-            pLfQueueThread threads[] = {
-                                         std::make_unique<lfQueueThreadAdd>(50),
-                                         std::make_unique<lfQueueThreadAdd>(50)
-                                       };
+            std::for_each(threads.begin(), threads.end(), [](const auto& t) {t->run(); });
+            std::for_each(threads.begin(), threads.end(), [](const auto& t) {t->join(); });
+            EXPECT_EQ(queue.size(), itemsToAddPerThread* threadNum);
+        }
 
-            threads[0]->run();
-            threads[1]->run();
-
-            threads[0]->join();
-            threads[1]->join();
-
-            EXPECT_EQ(queue.size(), 100u);
+        TEST(lfQueue, test_mt_add)
+        {
+            mt_test_add_only(3, 50);
+            mt_test_add_only(5, 200);
         }
 
     }
