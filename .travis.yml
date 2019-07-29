@@ -11,7 +11,7 @@ compiler:
   
 install:
       - pip install --user conan
-      - pip install --user cpp-coveralls
+      - if [ ! -z "${ENABLE_COVERITY_SCAN}" ]; then  pip install --user cpp-coveralls; fi
 addons:
    coverity_scan:
     project:
