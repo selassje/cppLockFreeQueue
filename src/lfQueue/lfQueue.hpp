@@ -19,14 +19,15 @@ namespace lfQueue
             void push(const T &t) noexcept;
             void push(T &&t) noexcept;
             template<typename... Args> void emplace(Args&&... args);
-            void pop() noexcept;
+            bool pop() noexcept;
             auto back() const noexcept;
             auto front() const noexcept;
             void clear() noexcept;
             virtual ~lfQueue();
         private:
             std::size_t m_Size = 0;
-            std::mutex  m_mutex;
+            std::mutex  m_mutexEmplace;
+            std::mutex  m_mutexPop;
             pNode m_Tail = nullptr;
             pNode m_Head = nullptr;
       
@@ -63,7 +64,8 @@ namespace lfQueue
     template<typename... Args> 
     void lfQueue<T>::emplace(Args&& ... args)
     {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        std::lock_guard<std::mutex> lock(m_mutexEmplace);
+        std::lock_guard<std::mutex> lock2(m_mutexPop);
 
         pNode pNewNode = std::make_unique<node>(std::forward<Args>(args)...);
         if (m_Size != 0)
@@ -94,8 +96,9 @@ namespace lfQueue
     }
 
     template<typename T>
-    void lfQueue<T>::pop() noexcept
+    bool lfQueue<T>::pop() noexcept
     {
+        std::lock_guard<std::mutex> lock(m_mutexPop);
         if (m_Size > 0)
         {
             if (m_Size == 1)
@@ -113,7 +116,9 @@ namespace lfQueue
                 }
             }
             --m_Size;
+            return true;
         }
+        return false;
     }
 
     template<typename T>

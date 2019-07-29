@@ -63,6 +63,34 @@ namespace lfQueue
             }
             const int m_itemsToAddCount;
         };
+
+        template<typename T>
+        class lfQueueThreadRemove : public lfQueueThread<T>
+        {
+            using _base = lfQueueThread<T>;
+        public:
+            lfQueueThreadRemove(typename _base::_mylfQueue& _lfQueue, int itemsToRemoveCount) :
+                _base(_lfQueue),
+                m_itemsToRemoveCount(itemsToRemoveCount)
+            {}
+
+            lfQueueThreadRemove(lfQueueThreadRemove&&) = default;
+            virtual ~lfQueueThreadRemove() = default;
+
+        private:
+            void task() noexcept override
+            {
+                int itemsRemovedCount = 0;
+                while (itemsRemovedCount < m_itemsToRemoveCount)
+                {
+                    if (_base::m_queue.pop())
+                    {
+                        ++itemsRemovedCount;
+                    }
+                }
+            }
+            const int m_itemsToRemoveCount;
+        };
     }
 }
 #endif
