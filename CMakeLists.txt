@@ -2,13 +2,10 @@ cmake_minimum_required (VERSION 3.5)
 
 project (lfQueue)
 
-
 message("CMake version ${CMAKE_VERSION}")
 message("CMake generator ${CMAKE_GENERATOR}")
 message("Compiler ${CMAKE_CXX_COMPILER_ID}")
 message("Compiler Version ${CMAKE_CXX_COMPILER_VERSION}")
-
-
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../bin") 
@@ -54,15 +51,18 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 endif()
 
 
-
-
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 set(CONAN_LIBCXX ${CONAN_SETTINGS_COMPILER_LIBCXX})
 conan_basic_setup(NO_OUTPUT_DIRS)
 
+
 add_executable(lfQueueTest src/tests/mainTests.cpp
                            src/tests/basic.cpp 
                            src/tests/mtTests.cpp)
+
+target_include_directories(lfQueueTest PRIVATE src/tests
+                                               src/lfQueue)
+
                            
 target_link_libraries(lfQueueTest ${CONAN_LIBS})
 
