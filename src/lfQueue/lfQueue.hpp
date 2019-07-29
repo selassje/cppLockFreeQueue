@@ -45,7 +45,7 @@ namespace lfQueue
     template<typename T>
     lfQueue<T>::~lfQueue()
     { 
-        m_Head.release();
+       m_Head.release(); //-V530
     }
     
     template<typename T>
@@ -125,7 +125,7 @@ namespace lfQueue
     void lfQueue<T>::clear() noexcept
     {
         m_Size = 0;
-        m_Head.release();
+        m_Head.release(); //-V530
         m_Tail.reset(nullptr);
     }
 }

@@ -6,9 +6,10 @@ namespace lfQueue
     namespace tests
     {
         template<typename T>
-        void basic_push_test(T&& a, T&& b)
+        void basic_push_pop_test(T&& a, T&& b)
         {
             lfQueue<int> queue;
+            ASSERT_FALSE(queue.pop());
 
             queue.push(std::forward<T&&>(a));
             EXPECT_EQ(queue.size(), 1u);
@@ -21,26 +22,25 @@ namespace lfQueue
             EXPECT_EQ(queue.back(), b);
             EXPECT_EQ(queue.front(), a);
 
-            queue.pop();
+            ASSERT_TRUE(queue.pop());
             EXPECT_EQ(queue.size(), 1u);
             EXPECT_EQ(queue.front(), b);
             EXPECT_EQ(queue.back(), b);
 
-            queue.pop();
-            EXPECT_EQ(queue.size(), 0u);
-           
+            ASSERT_TRUE(queue.pop());
+            EXPECT_EQ(queue.size(), 0u);       
         }
 
-        TEST(lfQueue, test_lValue_push)
+        TEST(lfQueue, test_lValue_push_pop)
         {        
             int a = 3;
             int b = 5;
-            basic_push_test(a,b);
+            basic_push_pop_test(a,b);
         }
 
-        TEST(lfQueue, test_rValue_push)
+        TEST(lfQueue, test_rValue_push_pop)
         {
-            basic_push_test(3, 5);
+            basic_push_pop_test(3, 5);
         }
 
         class constructionCounter
@@ -50,6 +50,14 @@ namespace lfQueue
             constructionCounter(const constructionCounter&) { ++m_copyCount; }
             constructionCounter(constructionCounter&&) noexcept { ++m_moveCount; }
        
+            const constructionCounter& operator=(const constructionCounter& a)
+            {
+                m_userCount = a.m_userCount;
+                m_copyCount = a.m_copyCount;
+                m_moveCount = a.m_moveCount;
+                return *this;
+            }
+
             static void reset() { m_moveCount = 0; m_copyCount = 0; m_userCount = 0; }
             static bool test(int u, int c, int m) { return m_userCount == u && m_copyCount == c && m_moveCount == m; }
 
@@ -106,5 +114,18 @@ namespace lfQueue
             EXPECT_EQ(queue.size(), 0u);
             ASSERT_FALSE(queue.front());
         }
+
+        template<typename T>
+        void test_dynamic_destructor()
+        {
+            std::make_unique<lfQueue<T>>().reset();         
+        }
+
+        TEST(lfQueue, test_dynamic_destructors)
+        {
+            test_dynamic_destructor<int>();
+            test_dynamic_destructor<constructionCounter>();
+        }
+
     }
 }

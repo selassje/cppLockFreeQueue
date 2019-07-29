@@ -16,8 +16,8 @@ namespace lfQueue
                                 const unsigned itemsToRemovePerThread)
 
         {
-            const size_t totalItemsToAdd = addThreadNum * itemsToAddPerThread;
-            const size_t totalItemsToRemove = removeThreadNum * itemsToRemovePerThread;
+            const auto totalItemsToAdd = addThreadNum * itemsToAddPerThread;
+            const auto totalItemsToRemove = removeThreadNum * itemsToRemovePerThread;
 
             assert(totalItemsToAdd >= totalItemsToRemove);
             queue.clear();
@@ -56,6 +56,5 @@ namespace lfQueue
             mt_test_add_remove<int>(3, 50, 2, 40);
             mt_test_add_remove<int>(100, 50, 100, 40);
         }
-
     }
 }
