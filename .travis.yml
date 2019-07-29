@@ -28,5 +28,4 @@ script:
     - cd build/gnu
     - ./build.sh
     - ./run.sh
-    - cpp-coveralls --gcov-options '\-lp'
-    
+    - if [! -z "${ENABLE_COVERITY_SCAN}" ]; then cpp-coveralls --gcov-options '\-lp' fi
