@@ -20,7 +20,7 @@ addons:
     notification_email: przemkoz85@gmail.com
     build_command_prepend: cd build/gnu
     build_command: ./build.sh
-    branch_pattern: coverity_scan2
+    branch_pattern: coverity_scan
 
 
 
